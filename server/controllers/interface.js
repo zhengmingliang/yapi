@@ -930,11 +930,12 @@ class interfaceController extends baseController {
         let parent = this.get(parentId);
         if(parent){
           result.level = parent.level + 1;
-          result.path = parent.path + id + "/";
+          let parentPath = parent.path ? parent.path : parent._id;
+          result.path = parentPath + id + "/";
         }
       }
       delete result._id
-      this.catModel.up(id,result);
+      this.catModel.up(id,{$set:result});
       result._id = id;
 
       let username = this.getUsername();
