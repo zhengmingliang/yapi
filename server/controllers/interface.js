@@ -909,6 +909,9 @@ class interfaceController extends baseController {
 
       let result = await this.catModel.save({
         name: params.name,
+        path: null,
+        parent_id: params.parent_id,
+        level: params.level,
         project_id: params.project_id,
         desc: params.desc,
         uid: this.getUid(),
