@@ -25,23 +25,8 @@ class interfaceCat extends baseModel {
   }
 
   save(data) {
-
-    let result = new this.model(data).save();
-    // modify by 郑明亮 2021年1月20日 16:44:06 添加父级id和树形路径的赋值处理
-    let parentId = data.parent_id;
-    var id = result._id;
-    if(!parentId){
-      data.parent_id = null;
-      data.level = 1;
-      data.path = id + "/"
-    }else {
-      let parent = this.get(parentId);
-      if(parent){
-        data.level = parent.level + 1;
-        data.path = parent.path + id + "/";
-      }
-    }
-    return this.up(id,data);
+    let m = new this.model(data);
+    return m.save();
   }
 
   get(id) {

@@ -916,6 +916,22 @@ class interfaceController extends baseController {
         up_time: yapi.commons.time()
       });
 
+      // modify by 郑明亮 2021年1月20日 16:44:06 添加父级id和树形路径的赋值处理
+      let parentId = result.parent_id;
+      let id = result._id;
+      if(!parentId){
+        result.parent_id = null;
+        result.level = 1;
+        result.path = id + "/"
+      }else {
+        let parent = this.get(parentId);
+        if(parent){
+          result.level = parent.level + 1;
+          result.path = parent.path + id + "/";
+        }
+      }
+      this.catModel.up(id,result);
+
       let username = this.getUsername();
       yapi.commons.saveLog({
         content: `<a href="/user/profile/${this.getUid()}">${username}</a> 添加了分类  <a href="/project/${
