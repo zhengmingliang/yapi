@@ -921,7 +921,7 @@ class interfaceController extends baseController {
 
       // modify by 郑明亮 2021年1月20日 16:44:06 添加父级id和树形路径的赋值处理
       let parentId = result.parent_id;
-      let id = result._id;
+      let id = "" + result._id;
       if(!parentId){
         result.parent_id = null;
         result.level = 1;
@@ -933,7 +933,9 @@ class interfaceController extends baseController {
           result.path = parent.path + id + "/";
         }
       }
+      delete result._id
       this.catModel.up(id,result);
+      result._id = id;
 
       let username = this.getUsername();
       yapi.commons.saveLog({
