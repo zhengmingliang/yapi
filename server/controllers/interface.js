@@ -89,33 +89,42 @@ function totree(list,parId) {
   return result;
 }
 
-function treeSort(tree){
+/**
+ * 树形分组排序
+ * @param tree
+ */
+function treeSort(tree) {
   for (let i = 0; i < tree.length; i++) {
-    if(tree.list){
-      tree.list.sort(function compare(a, b) {
+
+    if (tree[i].list) {
+      tree[i].list.sort(function compare(a, b) {
 
         // 分组在前
-        if (a.type == "group" && b.type == "interface"){
-          return -1;
+        if (a.type != b.type) {
+          if (a.type == "group") {
+            return -1;
+          } else {
+            return 1;
+          }
         }
-        //接口在后
-        if (a.type == "interface" && b.type == "group"){
-          b.level = 1;
+        if (a.type == b.type) {
+          // 顺序在后
+          if (a.index < b.index) {
+            return -1;
+          }
+          if (a > b) {
+            return 1;
+          }
         }
-        // 顺序在后
-        if (a.index < b.index) {
-          return -1;
-        }
-        if (a > b) {
-          return 1;
-        }
+
         // a must be equal to b
         return 0;
       })
+
+      console.log(tree[i].list)
     }
   }
 }
-
 class interfaceController extends baseController {
   constructor(ctx) {
     super(ctx);
