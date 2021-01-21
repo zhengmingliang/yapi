@@ -52,6 +52,16 @@ class interfaceCat extends baseModel {
       .exec();
   }
 
+  list(project_id,type) {
+    return this.model
+      .find({
+        project_id: project_id,
+        type: type
+      })
+      .sort({ index: 1 })
+      .exec();
+  }
+
   del(id) {
     return this.model.remove({
       _id: id
