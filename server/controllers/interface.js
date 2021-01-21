@@ -927,7 +927,7 @@ class interfaceController extends baseController {
         result.level = 1;
         result.path = id + "/"
       }else {
-        let parent = this.get(parentId);
+        let parent = await this.get(parentId);
         if(parent){
           result.level = parent.level + 1;
           let parentPath = parent.path ? parent.path : parent._id;
@@ -935,7 +935,7 @@ class interfaceController extends baseController {
         }
       }
       delete result._id
-      this.catModel.up(id,{$set:result});
+      await this.catModel.up(id,{$set:result});
       result._id = id;
 
       let username = this.getUsername();
