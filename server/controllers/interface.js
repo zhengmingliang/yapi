@@ -925,13 +925,13 @@ class interfaceController extends baseController {
       if(!parentId){
         result.parent_id = null;
         result.level = 1;
-        result.path = id + "/"
+        result.path = result._id + "/"
       }else {
         let parent = await this.get(parentId);
         if(parent){
           result.level = parent.level + 1;
           let parentPath = parent.path ? parent.path : parent._id;
-          result.path = parentPath + id + "/";
+          result.path = parentPath + "" + result._id + "/";
         }
       }
       delete result._id
