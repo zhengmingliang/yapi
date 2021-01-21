@@ -62,6 +62,60 @@ function handleHeaders(values){
 }
 
 
+/**
+ * 数组转树  非递归求解
+ * 利用数组和对象相互引用  时间复杂度O(n)
+ * @param {Object} list
+ */
+function totree(list,parId) {
+  let obj = {};
+  let result = [];
+  //将数组中数据转为键值对结构 (这里的数组和obj会相互引用)
+  list.map(el => {
+    obj[el._id] = el;
+  })
+  for(let i=0, len = list.length; i < len; i++) {
+    let id = list[i].parent_id;
+    if(id == parId) {
+      result.push(list[i]);
+      continue;
+    }
+    if(obj[id].list) {
+      obj[id].list.push(list[i]);
+    } else {
+      obj[id].list = [list[i]];
+    }
+  }
+  return result;
+}
+
+function treeSort(tree){
+  for (let i = 0; i < tree.length; i++) {
+    if(tree.list){
+      tree.list.sort(function compare(a, b) {
+
+        // 分组在前
+        if (a.type == "group" && b.type == "interface"){
+          return -1;
+        }
+        //接口在后
+        if (a.type == "interface" && b.type == "group"){
+          b.level = 1;
+        }
+        // 顺序在后
+        if (a.index < b.index) {
+          return -1;
+        }
+        if (a > b) {
+          return 1;
+        }
+        // a must be equal to b
+        return 0;
+      })
+    }
+  }
+}
+
 class interfaceController extends baseController {
   constructor(ctx) {
     super(ctx);
@@ -584,15 +638,24 @@ class interfaceController extends baseController {
         newResult = [];
       for (let i = 0, item, list; i < result.length; i++) {
         item = result[i].toObject();
+        item.type = "group" // 添加类型字段标识当前节点为分组
+
         list = await this.Model.listByCatid(item._id);
         for (let j = 0; j < list.length; j++) {
           list[j] = list[j].toObject();
+          list[j].type = "interface" // 添加类型字段标识当前节点为接口
         }
-
         item.list = list;
         newResult[i] = item;
+
       }
-      ctx.body = yapi.commons.resReturn(newResult);
+      let treeResult = totree(newResult,null)
+
+      // 进行分组和接口排序
+      treeSort(treeResult)
+
+
+      ctx.body = yapi.commons.resReturn(treeResult);
     } catch (err) {
       ctx.body = yapi.commons.resReturn(null, 402, err.message);
     }
