@@ -628,6 +628,7 @@ class interfaceController extends baseController {
 
   async listByMenu(ctx) {
     let project_id = ctx.params.project_id;
+    let type = ctx.params.type;
     if (!project_id) {
       return (ctx.body = yapi.commons.resReturn(null, 400, '项目id不能为空'));
     }
@@ -644,7 +645,19 @@ class interfaceController extends baseController {
 
     try {
       let result = await this.catModel.list(project_id),
-        newResult = [];
+          newResult = [];
+
+      // 当type为group时，则只查询分组信息
+      if("group" == type){
+        let result = await this.catModel.list(project_id);
+        for (let i = 0; i < result.length; i++) {
+          newResult[i] = result[i].toObject();
+        }
+        ctx.body = yapi.commons.resReturn(newResult);
+        return ;
+      }
+
+
       for (let i = 0, item, list; i < result.length; i++) {
         item = result[i].toObject();
         item.type = "group" // 添加类型字段标识当前节点为分组
