@@ -14,6 +14,8 @@ class interfaceModel extends baseModel {
       method: { type: String, required: true },
       project_id: { type: Number, required: true },
       catid: { type: Number, required: true },
+      parent_id: { type: Number, required: true}, // 父级id
+      leaf: { type: Boolean,default: true}, // 是否是叶子节点
       edit_uid: { type: Number, default: 0 },
       status: { type: String, enum: ['undone', 'done'], default: 'undone' },
       desc: String,
@@ -99,6 +101,7 @@ class interfaceModel extends baseModel {
   }
 
   save(data) {
+    data.parent_id = data.catid;
     let m = new this.model(data);
     return m.save();
   }

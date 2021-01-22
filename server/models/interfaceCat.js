@@ -17,6 +17,7 @@ class interfaceCat extends baseModel {
       parent_id: { type: Number}, // 父级id
       path: String, // 分组id路径，路径分隔符为 "/"
       level: { type: Number}, // 层级
+      leaf: { type: Boolean,default: false}, // 是否是叶子节点
       desc: String,
       add_time: Number,
       up_time: Number,
