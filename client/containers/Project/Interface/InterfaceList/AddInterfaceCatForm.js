@@ -10,7 +10,8 @@ class AddInterfaceForm extends Component {
     form: PropTypes.object,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
-    catdata: PropTypes.object
+    catdata: PropTypes.object,
+    catid: PropTypes.object
   };
   handleSubmit = e => {
     e.preventDefault();
@@ -22,10 +23,16 @@ class AddInterfaceForm extends Component {
   };
 
   handleSelect = value => {
+    console.log(JSON.stringify(value))
+
     let parent_id = value._id;
     let name = value.name;
-    this.catdata.parent_id = parent_id;
-    this.setState("catdata",this.catdata);
+    for (let i = 0; i < this.catdata.length; i++) {
+      if (this.catdata[i]._id = parent_id) {
+        this.setState("parent_id",this.this.catdata[i]._id);
+      }
+    }
+
   };
 
   render() {
@@ -45,7 +52,7 @@ class AddInterfaceForm extends Component {
       <Form onSubmit={this.handleSubmit}>
         <FormItem {...formItemLayout} label="上级分组">
           <Select
-              value={this.props.catdata.parent_id ? "" : "根节点"}
+              value={this.catid ? "" : "根节点"}
               style={{flexBasis: 180, flexGrow: 1}}
               onSelect={this.handleSelect()}>
             {this.props.catdata.map((item, index) => (
