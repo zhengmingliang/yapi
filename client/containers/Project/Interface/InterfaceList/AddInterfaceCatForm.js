@@ -10,12 +10,12 @@ class AddInterfaceForm extends Component {
     form: PropTypes.object,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
-    catdata: PropTypes.object,
-    catid: PropTypes.object,
+    catdata: PropTypes.array,
+    catid: PropTypes.number,
     parent_id: PropTypes.parent_id
-  };
+  }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -24,20 +24,6 @@ class AddInterfaceForm extends Component {
     });
   };
 
-  handleSelect = value => {
-    console.log(JSON.stringify(value))
-    if(value){
-      let parent_id = value._id;
-      let name = value.name;
-      for (let i = 0; i < this.catdata.length; i++) {
-        if (this.catdata[i]._id = parent_id) {
-          this.setState("parent_id",this.this.catdata[i]._id);
-        }
-      }
-    }
-
-
-  };
 
   render() {
     const { getFieldDecorator, getFieldsError } = this.props.form;
@@ -54,18 +40,20 @@ class AddInterfaceForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-       {/* <FormItem {...formItemLayout} label="上级分组">
-          <Select
-              value={this.catid ? "" : "根节点"}
-              style={{flexBasis: 180, flexGrow: 1}}
-              onSelect={this.handleSelect()}>
-            {this.props.catdata.map((item, index) => (
-                <Option value={item.name} key={item._id}>
-                  {item.name}
-                </Option>
-            ))}
-          </Select>
-        </FormItem>*/}
+        <FormItem
+            {...formItemLayout}
+            label="上级分类"
+        >
+          {getFieldDecorator('parent_id', {
+            initialValue: this.props.catid ? this.props.catid + '' : this.props.catdata[0]._id + ''
+          })(
+              <Select>
+                {this.props.catdata.map(item => {
+                  return <Option key={item._id} value={item._id + ""}>{item.name}</Option>
+                })}
+              </Select>
+          )}
+        </FormItem>
         <FormItem {...formItemLayout} label="分类名">
           {getFieldDecorator('name', {
             rules: [
