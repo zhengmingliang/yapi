@@ -11,8 +11,10 @@ class AddInterfaceForm extends Component {
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     catdata: PropTypes.object,
-    catid: PropTypes.object
+    catid: PropTypes.object,
+    parent_id: PropTypes.parent_id
   };
+
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -24,14 +26,16 @@ class AddInterfaceForm extends Component {
 
   handleSelect = value => {
     console.log(JSON.stringify(value))
-
-    let parent_id = value._id;
-    let name = value.name;
-    for (let i = 0; i < this.catdata.length; i++) {
-      if (this.catdata[i]._id = parent_id) {
-        this.setState("parent_id",this.this.catdata[i]._id);
+    if(value){
+      let parent_id = value._id;
+      let name = value.name;
+      for (let i = 0; i < this.catdata.length; i++) {
+        if (this.catdata[i]._id = parent_id) {
+          this.setState("parent_id",this.this.catdata[i]._id);
+        }
       }
     }
+
 
   };
 
@@ -50,7 +54,7 @@ class AddInterfaceForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        <FormItem {...formItemLayout} label="上级分组">
+       {/* <FormItem {...formItemLayout} label="上级分组">
           <Select
               value={this.catid ? "" : "根节点"}
               style={{flexBasis: 180, flexGrow: 1}}
@@ -61,7 +65,7 @@ class AddInterfaceForm extends Component {
                 </Option>
             ))}
           </Select>
-        </FormItem>
+        </FormItem>*/}
         <FormItem {...formItemLayout} label="分类名">
           {getFieldDecorator('name', {
             rules: [
