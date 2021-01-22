@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   fetchInterfaceListMenu,
-  fetchInterfaceListMenuGroup,
   fetchInterfaceList,
   fetchInterfaceCatList,
   fetchInterfaceData,
@@ -37,7 +36,6 @@ const headHeight = 240; // menu顶部到网页顶部部分的高度
   },
   {
     fetchInterfaceListMenu,
-    fetchInterfaceListMenuGroup,
     fetchInterfaceData,
     deleteInterfaceCatData,
     deleteInterfaceData,
@@ -54,7 +52,6 @@ class InterfaceMenu extends Component {
     projectId: PropTypes.string,
     list: PropTypes.array,
     fetchInterfaceListMenu: PropTypes.func,
-    fetchInterfaceListMenuGroup: PropTypes.func,
     curProject: PropTypes.object,
     fetchInterfaceData: PropTypes.func,
     addInterfaceData: PropTypes.func,
@@ -72,7 +69,7 @@ class InterfaceMenu extends Component {
    */
   changeModal = (key, status) => {
     //visible add_cat_modal_visible change_cat_modal_visible del_cat_modal_visible
-    this.getMenuGroup();
+    // this.getMenuGroup();
     let newState = {};
     newState[key] = status;
     this.setState(newState);
@@ -111,12 +108,12 @@ class InterfaceMenu extends Component {
       list: r.payload.data.data
     });
   }
-  async getMenuGroup() {
+  /*async getMenuGroup() {
     let r = await this.props.fetchInterfaceListMenuGroup(this.props.projectId);
     this.setState({
       menuGroup: r.payload.data.data
     });
-  }
+  }*/
 
   componentWillMount() {
     this.handleRequest();
