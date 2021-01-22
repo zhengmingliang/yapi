@@ -1,6 +1,6 @@
 import React, { PureComponent as Component } from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Button } from 'antd';
+import { Form,Select, Input, Button } from 'antd';
 const FormItem = Form.Item;
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -48,7 +48,7 @@ class AddInterfaceForm extends Component {
               value={this.props.catdata.parent_id ? "" : "根节点"}
               style={{flexBasis: 180, flexGrow: 1}}
               onSelect={this.handleSelect()}>
-            {catdata.map((item, index) => (
+            {this.props.catdata.map((item, index) => (
                 <Option value={item.name} key={item._id}>
                   {item.name}
                 </Option>
