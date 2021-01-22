@@ -21,6 +21,13 @@ class AddInterfaceForm extends Component {
     });
   };
 
+  handleSelect = value => {
+    let parent_id = value._id;
+    let name = value.name;
+    this.catdata.parent_id = parent_id;
+    this.setState("catdata",this.catdata);
+  };
+
   render() {
     const { getFieldDecorator, getFieldsError } = this.props.form;
     const formItemLayout = {
@@ -36,6 +43,18 @@ class AddInterfaceForm extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
+        <FormItem {...formItemLayout} label="上级分组">
+          <Select
+              value={this.props.catdata.parent_id ? "" : "根节点"}
+              style={{flexBasis: 180, flexGrow: 1}}
+              onSelect={this.handleSelect()}>
+            {catdata.map((item, index) => (
+                <Option value={item.name} key={item._id}>
+                  {item.name}
+                </Option>
+            ))}
+          </Select>
+        </FormItem>
         <FormItem {...formItemLayout} label="分类名">
           {getFieldDecorator('name', {
             rules: [

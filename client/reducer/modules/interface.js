@@ -134,6 +134,14 @@ export async function fetchInterfaceListMenu(projectId) {
   };
 }
 
+export async function fetchInterfaceListMenuGroup(projectId) {
+  let result = await axios.get('/api/interface/list_menu?type=group&project_id=' + projectId);
+  return {
+    type: FETCH_INTERFACE_LIST_MENU,
+    payload: result
+  };
+}
+
 export async function fetchInterfaceList(params) {
   let result = await axios.get('/api/interface/list', {
     params,
