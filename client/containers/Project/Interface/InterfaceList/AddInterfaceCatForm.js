@@ -12,7 +12,7 @@ class AddInterfaceForm extends Component {
     onCancel: PropTypes.func,
     catdata: PropTypes.array,
     catid: PropTypes.number,
-    parent_id: PropTypes.parent_id
+    parent_id: PropTypes.number
   }
 
   handleSubmit = (e) => {

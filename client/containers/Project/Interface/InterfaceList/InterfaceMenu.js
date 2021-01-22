@@ -414,7 +414,7 @@ class InterfaceMenu extends Component {
             <AddInterfaceCatForm
               onCancel={() => this.changeModal('add_cat_modal_visible', false)}
               onSubmit={this.handleAddInterfaceCat}
-              catdata = {this.state.menuGroup}
+              catdata = {this.props.curProject.cat}
               catid = {this.state.curCatid}
             />
           </Modal>
