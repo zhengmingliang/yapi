@@ -15,6 +15,12 @@ class AddInterfaceForm extends Component {
     parent_id: PropTypes.number
   }
 
+  componentDidMount() {
+    super.componentDidMount();
+    // 添加根节点分类
+    catdata.push({desc:"根节点",name:"根节点"})
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
