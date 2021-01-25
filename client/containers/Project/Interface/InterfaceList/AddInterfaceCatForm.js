@@ -30,7 +30,7 @@ class AddInterfaceForm extends Component {
       }
     }
 
-  }
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -66,7 +66,7 @@ class AddInterfaceForm extends Component {
           })(
               <Select>
                 {this.props.catdata.map(item => {
-                  return <Option key={item._id} value={item._id ? (item._id + "") : null}>{item.name}</Option>
+                  return <Select.Option key={item._id} value={item._id ? (item._id + "") : null}>{item.name}</Select.Option>
                 })}
               </Select>
           )}
