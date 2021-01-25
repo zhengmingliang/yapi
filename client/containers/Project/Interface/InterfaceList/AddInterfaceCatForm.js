@@ -14,13 +14,11 @@ class AddInterfaceForm extends Component {
     catid: PropTypes.number,
     parent_id: PropTypes.number
   }
-
-  componentDidMount() {
-    super.componentDidMount();
-    // 添加根节点分类
-    catdata.push({desc:"根节点",name:"根节点"})
+  constructor(props, context) {
+    super(props, context);
+    
+    this.props.catdata.push({desc:"根节点",name:"根节点"})
   }
-
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -55,7 +53,7 @@ class AddInterfaceForm extends Component {
           })(
               <Select>
                 {this.props.catdata.map(item => {
-                  return <Option key={item._id} value={item._id + ""}>{item.name}</Option>
+                  return <Option key={item._id} value={item._id ? (item._id + "") : null}>{item.name}</Option>
                 })}
               </Select>
           )}
