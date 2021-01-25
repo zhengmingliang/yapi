@@ -16,9 +16,22 @@ class AddInterfaceForm extends Component {
   }
   constructor(props, context) {
     super(props, context);
-    
-    this.props.catdata.push({desc:"根节点",name:"根节点"})
+    let catdata = this.props.catdata;
+    if (catdata) {
+      let hasRoot = false;
+      for (let i = 0; i < catdata.length; i++) {
+        if (catdata[i].name == "根节点") {
+          hasRoot = true;
+          break;
+        }
+      }
+      if(!hasRoot){
+        catdata.push({desc:"根节点",name:"根节点"})
+      }
+    }
+
   }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
